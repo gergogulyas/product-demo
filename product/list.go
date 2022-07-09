@@ -1,8 +1,11 @@
 package product
 
+const maxItems = 5
+
 func (r Repository) GetList(filters []Filter) []Resource {
 	list := []Resource{}
 
+	listCounter := 0
 	for _, product := range r.Items {
 		isValid := true
 
@@ -27,6 +30,11 @@ func (r Repository) GetList(filters []Filter) []Resource {
 			Category: product.Category,
 			Price:    product.getPriceResource(),
 		})
+
+		listCounter++
+		if listCounter >= maxItems {
+			break
+		}
 	}
 
 	return list
