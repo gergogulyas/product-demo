@@ -7,7 +7,7 @@ import (
 
 type Repository struct {
 	Discounts *DiscountRepository
-	Items     List
+	Items     []Product
 }
 
 func (r *Repository) init() {
@@ -15,7 +15,7 @@ func (r *Repository) init() {
 	file, _ := ioutil.ReadFile("product.json")
 	_ = json.Unmarshal(file, &data)
 
-	r.Items = data
+	r.Items = data.Products
 }
 
 func NewProductRepository(discounts *DiscountRepository) *Repository {

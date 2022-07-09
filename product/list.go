@@ -1,9 +1,22 @@
 package product
 
-func (r Repository) GetList() []Resource {
+func (r Repository) GetList(filters []Filter) []Resource {
 	list := []Resource{}
 
-	for _, product := range r.Items.Products {
+	for _, product := range r.Items {
+		isValid := true
+
+		for _, filter := range filters {
+			isValid = filter.ApplyOnItem(product)
+			if !isValid {
+				break // stop iteration on first false
+			}
+		}
+
+		if !isValid {
+			continue // goto next item
+		}
+
 		for _, discountModel := range r.Discounts.Discounts {
 			discountModel.Apply(&product)
 		}
