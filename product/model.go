@@ -14,11 +14,11 @@ type Product struct {
 	discountPercent int
 }
 
-func (p Product) HasDiscount() bool {
+func (p *Product) HasDiscount() bool {
 	return p.discountPercent != 0
 }
 
-func (p Product) Discount() int {
+func (p *Product) Discount() int {
 	return p.discountPercent
 }
 
@@ -26,13 +26,14 @@ func (p *Product) SetDiscount(percent int) {
 	p.discountPercent = percent
 }
 
-func (p Product) getPriceResource() PriceResource {
+func (p *Product) getPriceResource() PriceResource {
 	if p.HasDiscount() {
 		percentText := fmt.Sprintf("%d%%", p.Discount())
-		d := (100.0 - float64(p.Discount())) / 100.0
+		percentMultiplier := (100.0 - float64(p.Discount())) / 100.0
+
 		return PriceResource{
 			Original:           p.Price,
-			Final:              int(float64(p.Price) * d),
+			Final:              int(float64(p.Price) * percentMultiplier),
 			DiscountPercentage: &percentText,
 			Currency:           "EUR",
 		}
