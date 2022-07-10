@@ -10,7 +10,7 @@ func (r Repository) GetList(filters []Filter) []Resource {
 		isValid := true
 
 		for _, filter := range filters {
-			isValid = filter.ApplyOnItem(product)
+			isValid = filter.ApplyOnItem(&product)
 			if !isValid {
 				break // stop iteration on first false
 			}
