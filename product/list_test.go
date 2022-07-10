@@ -16,7 +16,7 @@ func TestListTestSuite(t *testing.T) {
 	suite.Run(t, new(ListTestSuite))
 }
 
-func (s *ModelTestSuite) TestGetListReturnEmptySliceWhenIteratingOnEmptySlice() {
+func (s *ListTestSuite) TestGetListReturnEmptySliceWhenIteratingOnEmptySlice() {
 	r := product.NewProductRepository(&product.DiscountRepository{})
 	r.Items = []product.Product{}
 	result := r.GetList([]product.Filter{})
@@ -24,7 +24,7 @@ func (s *ModelTestSuite) TestGetListReturnEmptySliceWhenIteratingOnEmptySlice() 
 	s.Assert().Empty(result)
 }
 
-func (s *ModelTestSuite) TestGetListReturnMaximumFiveItems() {
+func (s *ListTestSuite) TestGetListReturnMaximumFiveItems() {
 	r := product.NewProductRepository(&product.DiscountRepository{})
 	r.Items = []product.Product{
 		{},
@@ -42,7 +42,7 @@ func (s *ModelTestSuite) TestGetListReturnMaximumFiveItems() {
 	s.Assert().Equal(5, len(result))
 }
 
-func (s *ModelTestSuite) TestGetListReturnExpectedItemsWhenFiltersPassed() {
+func (s *ListTestSuite) TestGetListReturnExpectedItemsWhenFiltersPassed() {
 	r := product.NewProductRepository(&product.DiscountRepository{})
 	r.Items = []product.Product{
 		{Category: "test", Price: 15000},
@@ -60,7 +60,7 @@ func (s *ModelTestSuite) TestGetListReturnExpectedItemsWhenFiltersPassed() {
 	s.Assert().Equal(2, len(result))
 }
 
-func (s *ModelTestSuite) TestGetListReturnItemWithDiscountApplied() {
+func (s *ListTestSuite) TestGetListReturnItemWithDiscountApplied() {
 	cd := product.NewCategoryDiscount("test", 10)
 	sd := product.NewSKUDiscount("000001", 20)
 	dr := product.DiscountRepository{}
