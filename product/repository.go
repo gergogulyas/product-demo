@@ -5,6 +5,10 @@ import (
 	"io/ioutil"
 )
 
+type RepositoryContract interface {
+	GetList(filters []Filter) []Resource
+}
+
 type Repository struct {
 	Discounts *DiscountRepository
 	Items     []Product
@@ -19,8 +23,8 @@ func (r *Repository) init() {
 }
 
 func NewProductRepository(discounts *DiscountRepository) *Repository {
-	repo := &Repository{Discounts: discounts}
-	repo.init()
+	repository := &Repository{Discounts: discounts}
+	repository.init()
 
-	return repo
+	return repository
 }
